@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown Preview Enhanced ported to vscode",
+  "displayName": "CAS Markdown Studio",
+  "description": "Interactive Markdown preview for VS Code: tick tasks, copy code, fast and open source. A fork of Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "Markdown Preview Enhanced: Open Graph View",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "Markdown Preview Enhanced: Open Preview to the Side",

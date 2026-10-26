@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown 增强预览",
-  "description": " 这款插件意在让你拥有飘逸的 Markdown 写作体验",
+  "displayName": "CAS Markdown Studio",
+  "description": "适用于 VS Code 的交互式 Markdown 预览：勾选任务、复制代码。Markdown Preview Enhanced 的分支。",
   "customEditorPreviewDisplayName": "Markdown 增强预览",
   "markdown-preview-enhanced.openGraphView.title": "MPE:打开图形视图",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:打开侧边预览",

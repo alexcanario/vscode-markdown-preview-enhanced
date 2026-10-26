@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Gelişmiş Markdown önizleme eklentisi",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code için etkileşimli Markdown önizlemesi: görevleri işaretleyin, kodu kopyalayın. Markdown Preview Enhanced çatalı.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:Grafik görünümünü aç",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:Önizlemeyi yanda aç",

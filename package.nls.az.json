@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown Preview Enhanced-in VS Code-a portlanmış versiyası",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code üçün interaktiv Markdown önbaxışı: tapşırıqları işarələyin, kodu kopyalayın. Markdown Preview Enhanced-in fork-u.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "Markdown Preview Enhanced: Qrafik görünüşünü aç",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "Markdown Preview Enhanced: Önbaxışı yanda aç",

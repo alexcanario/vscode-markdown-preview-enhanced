@@ -1,5 +1,5 @@
 {
-  "name": "markdown-preview-enhanced",
+  "name": "cas-markdown-studio",
   "displayName": "%displayName%",
   "version": "0.8.40",
   "description": "%description%",
@@ -10,17 +10,19 @@
     "markdown"
   ],
   "bugs": {
-    "url": "https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues"
+    "url": "https://github.com/alexcanario/vscode-markdown-preview-enhanced/issues"
   },
-  "repository": "https://github.com/shd101wyy/vscode-markdown-preview-enhanced",
+  "repository": "https://github.com/alexcanario/vscode-markdown-preview-enhanced",
   "license": "NCSA",
+  "author": "Alex Canário",
   "contributors": [
+    "Alex Canário",
     "shd101wyy",
     "kachkaev",
     "gabyx",
     "mavaddat"
   ],
-  "publisher": "shd101wyy",
+  "publisher": "control-alt-sistemas",
   "packageManager": "pnpm@10.28.0",
   "main": "./out/native/extension.js",
   "browser": "./out/web/extension.js",
@@ -1046,5 +1048,5 @@
       "less": "4.2.2"
     }
   },
-  "icon": "media/mpe.png"
+  "icon": "media/icon.png"
 }

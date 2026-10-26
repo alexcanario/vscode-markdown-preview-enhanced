@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Extensie voor verbeterde Markdown-weergave",
+  "displayName": "CAS Markdown Studio",
+  "description": "Interactief Markdown-voorbeeld voor VS Code: vink taken af en kopieer code. Een fork van Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:Grafiekweergave openen",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:Voorbeeld naast openen",

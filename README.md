@@ -1,4 +1,6 @@
-<h1 align="center"> Markdown Preview Enhanced </h1>
+<h1 align="center"> CAS Markdown Studio </h1>
+
+> **CAS Markdown Studio** is a fork of [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) by Yiyi Wang and contributors, released under the same [University of Illinois/NCSA Open Source License](LICENSE.md). It adds an interactive preview (click task checkboxes to edit the file, a Copy button on code blocks) and is maintained independently by Control-Alt-Sistemas. It is not affiliated with or endorsed by the original authors.
 
 ![intro](https://user-images.githubusercontent.com/1908863/28495106-30b3b15e-6f09-11e7-8eb6-ca4ca001ab15.png)
 

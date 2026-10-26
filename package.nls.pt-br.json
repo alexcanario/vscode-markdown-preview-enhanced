@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Extensão para melhorar a visualização de Markdown",
+  "displayName": "CAS Markdown Studio",
+  "description": "Visualização interativa de Markdown para VS Code: marque tarefas e copie código. Um fork do Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:Abrir visualização de grafo",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:Abrir visualização lateral",

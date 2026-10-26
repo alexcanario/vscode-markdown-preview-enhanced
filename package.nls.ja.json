@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown プレビューを強化する拡張機能",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code 向けのインタラクティブな Markdown プレビュー：タスクのチェックとコードのコピー。Markdown Preview Enhanced のフォークです。",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:グラフビューを開く",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:プレビューを横に開く",

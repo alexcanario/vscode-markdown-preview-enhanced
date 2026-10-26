@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Rebrand
+
+- **Now published as CAS Markdown Studio** (`control-alt-sistemas.cas-markdown-studio`): new name, publisher, icon and README notice; `LICENSE.md` keeps the original NCSA notice and adds ours. Command and setting ids still start with `markdown-preview-enhanced.` to keep merges from upstream small, so this extension cannot be enabled together with the original Markdown Preview Enhanced.
+
 ### Features
 
 - **Code blocks in the preview get a `Copy` button** — hovering a code block shows a button at its top-right that copies the code to the clipboard (with a short `Copied!` confirmation). The button is hidden when printing and can be turned off with the new `markdown-preview-enhanced.enableCodeCopyButton` setting ([#2177](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/2177)).

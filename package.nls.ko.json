@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown 미리보기를 향상시키는 확장 기능",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code용 대화형 Markdown 미리 보기: 작업 체크와 코드 복사. Markdown Preview Enhanced의 포크입니다.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:그래프 뷰 열기",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:미리보기를 옆에 열기",
