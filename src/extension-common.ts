@@ -26,6 +26,7 @@ import {
   getPreviewUri,
 } from './preview-provider';
 import { GraphViewProvider } from './graph-view-provider';
+import { toggleTaskLine } from './task-list-toggle';
 import {
   createMissingMarkdownNote,
   getBottomVisibleLine,
@@ -672,30 +673,23 @@ export async function initExtensionCommon(context: vscode.ExtensionContext) {
     });
   }
 
-  function clickTaskListCheckbox(uri: string, dataLine: number) {
-    const sourceUri = vscode.Uri.parse(uri);
-    const visibleTextEditors = vscode.window.visibleTextEditors;
-    for (let i = 0; i < visibleTextEditors.length; i++) {
-      const editor = visibleTextEditors[i];
-      if (editor.document.uri.fsPath === sourceUri.fsPath) {
-        editor.edit((edit) => {
-          let line = editor.document.lineAt(dataLine).text;
-          if (line.match(/\[ \]/)) {
-            line = line.replace('[ ]', '[x]');
-          } else {
-            line = line.replace(/\[[xX]\]/, '[ ]');
-          }
-          edit.replace(
-            new vscode.Range(
-              new vscode.Position(dataLine, 0),
-              new vscode.Position(dataLine, line.length),
-            ),
-            line,
-          );
-        });
-        break;
-      }
+  async function clickTaskListCheckbox(uri: string, dataLine: number) {
+    // Open the document by uri instead of looking for a visible editor, so
+    // the toggle also works for custom editors and locked/hidden previews.
+    const document = await vscode.workspace.openTextDocument(
+      vscode.Uri.parse(uri),
+    );
+    if (dataLine < 0 || dataLine >= document.lineCount) {
+      return;
     }
+    const line = document.lineAt(dataLine);
+    const toggled = toggleTaskLine(line.text);
+    if (toggled === null) {
+      return;
+    }
+    const edit = new vscode.WorkspaceEdit();
+    edit.replace(document.uri, line.range, toggled);
+    await vscode.workspace.applyEdit(edit);
   }
 
   function setPreviewTheme(_uri: string, theme: string) {

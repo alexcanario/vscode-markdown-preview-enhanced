@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Code blocks in the preview get a `Copy` button** — hovering a code block shows a button at its top-right that copies the code to the clipboard (with a short `Copied!` confirmation). The button is hidden when printing and can be turned off with the new `markdown-preview-enhanced.enableCodeCopyButton` setting ([#2177](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/2177)).
 
+### Fixes
+
+- **Clicking a task list checkbox in the preview now edits the source even when it is not open in a visible editor** — the handler only looked at `visibleTextEditors`, so with the custom editor or a hidden/locked preview the click silently did nothing. It now opens the document by its URI and applies a `WorkspaceEdit` (undo with `Ctrl+Z`), toggling only the real task box (`- [ ]`, `* [x]`, `1. [ ]`, …) and leaving other `[ ]` text on the line alone.
+
 ## [0.8.40] - 2026-10-09
 
 ### Picked up from crossnote 0.9.42
