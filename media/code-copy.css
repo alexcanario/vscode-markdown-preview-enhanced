@@ -1,0 +1,38 @@
+/* Copy button on code blocks */
+.mpe-code-copy-host {
+  position: relative;
+}
+
+.mpe-code-copy {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: inherit;
+  background: rgba(128, 128, 128, 0.2);
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mpe-code-copy-host:hover > .mpe-code-copy,
+.mpe-code-copy:focus-visible,
+.mpe-code-copy.mpe-code-copy-done {
+  opacity: 1;
+}
+
+.mpe-code-copy:hover {
+  background: rgba(128, 128, 128, 0.35);
+}
+
+@media print {
+  .mpe-code-copy {
+    display: none;
+  }
+}

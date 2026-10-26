@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Features
+
+- **Code blocks in the preview get a `Copy` button** — hovering a code block shows a button at its top-right that copies the code to the clipboard (with a short `Copied!` confirmation). The button is hidden when printing and can be turned off with the new `markdown-preview-enhanced.enableCodeCopyButton` setting ([#2177](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/2177)).
+
 ## [0.8.40] - 2026-10-09
 
 ### Picked up from crossnote 0.9.42

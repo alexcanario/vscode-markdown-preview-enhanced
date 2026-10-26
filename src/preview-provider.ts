@@ -786,22 +786,24 @@ export class PreviewProvider {
 
       // Build lightbox head injection when enabled
       let head = '';
+      const mediaHead = (name: string) => {
+        const cssUri = previewPanel.webview.asWebviewUri(
+          vscode.Uri.joinPath(
+            this.context.extensionUri,
+            'media',
+            `${name}.css`,
+          ),
+        );
+        const jsUri = previewPanel.webview.asWebviewUri(
+          vscode.Uri.joinPath(this.context.extensionUri, 'media', `${name}.js`),
+        );
+        return `<link rel="stylesheet" href="${cssUri}"><script defer src="${jsUri}"></script>`;
+      };
       if (getMPEConfig<boolean>('enableImageLightbox') ?? true) {
-        const lightboxCssUri = previewPanel.webview.asWebviewUri(
-          vscode.Uri.joinPath(
-            this.context.extensionUri,
-            'media',
-            'lightbox.css',
-          ),
-        );
-        const lightboxJsUri = previewPanel.webview.asWebviewUri(
-          vscode.Uri.joinPath(
-            this.context.extensionUri,
-            'media',
-            'lightbox.js',
-          ),
-        );
-        head = `<link rel="stylesheet" href="${lightboxCssUri}"><script defer src="${lightboxJsUri}"></script>`;
+        head += mediaHead('lightbox');
+      }
+      if (getMPEConfig<boolean>('enableCodeCopyButton') ?? true) {
+        head += mediaHead('code-copy');
       }
 
       const html = await engine.generateHTMLTemplateForPreview({

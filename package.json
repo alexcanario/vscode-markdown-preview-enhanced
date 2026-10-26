@@ -861,6 +861,11 @@
           "default": true,
           "type": "boolean"
         },
+        "markdown-preview-enhanced.enableCodeCopyButton": {
+          "description": "%markdown-preview-enhanced.enableCodeCopyButton.description%",
+          "default": true,
+          "type": "boolean"
+        },
         "markdown-preview-enhanced.enableImageLightbox": {
           "description": "%markdown-preview-enhanced.enableImageLightbox.description%",
           "default": true,
