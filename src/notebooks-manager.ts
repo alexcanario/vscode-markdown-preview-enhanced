@@ -228,12 +228,25 @@ class NotebooksManager {
       vscodeMPEConfig.previewColorScheme,
     );
 
+    // Preview background color (empty keeps the theme's own background).
+    // Placed first so `.crossnote/style.less` can still override it.
+    const backgroundColor = (
+      getMPEConfig<string>('previewBackgroundColor') ?? ''
+    )
+      .trim()
+      .replace(/[;{}<>]/g, '');
+    const backgroundCss = backgroundColor
+      ? `html, body, .markdown-preview { background-color: ${backgroundColor} !important; }\n`
+      : '';
+
     return {
       ...vscodeMPEConfig,
       ...globalConfig,
       ...workspaceConfig,
       globalCss:
-        (globalConfig.globalCss ?? '') + (workspaceConfig.globalCss ?? ''),
+        backgroundCss +
+        (globalConfig.globalCss ?? '') +
+        (workspaceConfig.globalCss ?? ''),
       previewTheme,
     };
   }

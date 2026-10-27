@@ -295,6 +295,11 @@
             "type": "string"
           }
         },
+        "markdown-preview-enhanced.previewBackgroundColor": {
+          "description": "%markdown-preview-enhanced.previewBackgroundColor.description%",
+          "type": "string",
+          "default": "black"
+        },
         "markdown-preview-enhanced.previewColorScheme": {
           "type": "string",
           "enum": [

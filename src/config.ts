@@ -38,6 +38,7 @@ type VSCodeMPEConfigKey =
   | 'hideDefaultVSCodeMarkdownPreviewButtons'
   | 'liveUpdate'
   | 'liveUpdateDebounceMs'
+  | 'previewBackgroundColor'
   | 'previewColorScheme'
   | 'previewMode'
   | 'qiniuAccessKey'

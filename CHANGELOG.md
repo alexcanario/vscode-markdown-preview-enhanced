@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 - **Code blocks in the preview get a `Copy` button** — hovering a code block shows a button at its top-right that copies the code to the clipboard (with a short `Copied!` confirmation). The button is hidden when printing and can be turned off with the new `markdown-preview-enhanced.enableCodeCopyButton` setting ([#2177](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/2177)).
+- **Configurable preview background** — the new `markdown-preview-enhanced.previewBackgroundColor` setting sets the preview's background color (any CSS color). It defaults to `black`; set it to an empty string to use the selected preview theme's own background.
 
 ### Fixes
 
