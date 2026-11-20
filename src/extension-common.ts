@@ -36,6 +36,7 @@ import {
   getWorkspaceFolderUri,
   isMarkdownFile,
 } from './utils';
+import { timed } from './perf-log';
 import * as path from 'path';
 
 let editorScrollDelay = Date.now();
@@ -79,6 +80,39 @@ export async function initExtensionCommon(context: vscode.ExtensionContext) {
   async function getPreviewContentProvider(uri: vscode.Uri) {
     return await PreviewProvider.getPreviewContentProvider(uri, context);
   }
+
+  /**
+   * Warm-up: build the preview provider (notebook init + config, ~2 s cold)
+   * in the background as soon as a markdown file becomes active, so the
+   * first preview does not pay for it. Only for trusted workspaces, because
+   * the notebook init runs the workspace's `.crossnote` scripts, and once
+   * per notebook root. Windows that never open markdown pay nothing.
+   */
+  const warmedNotebookRoots = new Set<string>();
+  function warmUpPreviewProvider(editor: vscode.TextEditor | undefined) {
+    if (!editor || !vscode.workspace.isTrusted) {
+      return;
+    }
+    const document = editor.document;
+    if (!isMarkdownFile(document) || document.uri.scheme === 'untitled') {
+      return;
+    }
+    const rootKey = getWorkspaceFolderUri(document.uri).toString();
+    if (warmedNotebookRoots.has(rootKey)) {
+      return;
+    }
+    warmedNotebookRoots.add(rootKey);
+    timed('warm-up preview provider', () =>
+      getPreviewContentProvider(document.uri),
+    ).catch((error) => {
+      // The preview reports the original error when it is opened.
+      console.warn('[CAS Markdown Studio] Preview warm-up failed:', error);
+    });
+  }
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor(warmUpPreviewProvider),
+  );
+  warmUpPreviewProvider(vscode.window.activeTextEditor);
 
   async function openPreviewToTheSide(uri?: vscode.Uri) {
     const editor = vscode.window.activeTextEditor;

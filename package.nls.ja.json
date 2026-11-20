@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "編集中の Markdown のプレビューを自動的に表示します。",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` 機能から除外する URI スキームのリスト（例: `vscode-notebook-cell`）。これらのスキームに一致するファイルは自動プレビューをトリガーしません。",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` 機能から除外するファイル名パターンのリスト（例: `*.note.md`）。いずれかのパターンに一致する名前のファイルは自動プレビューをトリガーしません。ワイルドカードとして `*` を使用できます。照合はファイルのベース名（フルパスではなく）に対して行われ、大文字と小文字を区別しません。",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "プレビューの背景色（任意の CSS カラー。例: `black`、`#111`、`rgb(20, 20, 20)`）。既定値は `black` です。空にすると、選択したプレビューテーマの背景を使用します。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "`markdown-preview-enhanced.previewTheme` 設定を使用します。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "システムのカラースキームに従います。true に設定すると、システムがライトとダークを切り替えたときに Markdown プレビューのテーマも自動的に切り替わります。たとえば、現在のプレビューテーマを `github-light.css` に設定している場合、システムがダークになるとプレビューテーマは自動的に `github-dark.css` に切り替わります。false に設定すると、プレビューのテーマは自動的に変更されません。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "エディターと同じテーマ（ライトまたはダーク）を使用します。true に設定すると、VS Code のライトとダークのテーマを切り替えたときに Markdown プレビューのテーマも自動的に切り替わります。たとえば、現在のプレビューテーマを `github-light.css` に設定している場合、VS Code のダークテーマに切り替えるとプレビューテーマは自動的に `github-dark.css` に切り替わります。false に設定すると、プレビューのテーマは自動的に変更されません。",

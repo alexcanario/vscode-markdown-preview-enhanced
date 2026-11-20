@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "自動顯示正在編輯的 Markdown 的預覽。",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "要從 `automaticallyShowPreviewOfMarkdownBeingEdited` 功能中排除的 URI scheme 清單（例如 `vscode-notebook-cell`）。符合這些 scheme 的檔案不會觸發自動預覽。",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "要從 `automaticallyShowPreviewOfMarkdownBeingEdited` 功能中排除的檔案名稱模式清單（例如 `*.note.md`）。檔案名稱符合其中任一模式的檔案不會觸發自動預覽。支援使用 `*` 作為萬用字元。比對針對檔案的基本名稱（而非完整路徑）進行，且不區分大小寫。",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "預覽的背景顏色（任何 CSS 顏色，例如 `black`、`#111` 或 `rgb(20, 20, 20)`）。預設為 `black`。留空則使用所選預覽主題的背景。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "使用 `markdown-preview-enhanced.previewTheme` 設定。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "跟隨系統配色方案。若設為 true，則當系統在淺色與深色之間切換時，Markdown 預覽主題會自動切換。例如，若目前預覽主題設為 `github-light.css`，當系統為深色時，預覽主題會自動切換為 `github-dark.css`。若設為 false，則預覽主題不會自動變更。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "使用與編輯器相同的主題（淺色或深色）。若設為 true，則當你在 VS Code 淺色與深色主題之間切換時，Markdown 預覽主題會自動切換。例如，若目前預覽主題設為 `github-light.css`，當你切換到 VS Code 深色主題時，預覽主題會自動切換為 `github-dark.css`。若設為 false，則預覽主題不會自動變更。",

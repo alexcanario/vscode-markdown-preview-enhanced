@@ -16,6 +16,8 @@ import {
   computeEditorAssociations,
 } from './editor-associations';
 import FileWatcher from './file-watcher';
+import { timed } from './perf-log';
+import { SingleFlight } from './single-flight';
 import { getAllPreviewProviders } from './preview-provider';
 import {
   getUserScopeGlobalConfigPath,
@@ -33,7 +35,18 @@ class NotebooksManager {
   private currentMPEConfig: MarkdownPreviewEnhancedConfig =
     MarkdownPreviewEnhancedConfig.getCurrentConfig();
 
-  private failedNotebookPaths: Set<string> = new Set();
+  /**
+   * Notebook roots whose initialization failed, with the original error, so
+   * a later call (for example the preview after a background warm-up)
+   * reports what went wrong instead of a bare "previously failed".
+   */
+  private failedNotebookPaths: Map<string, unknown> = new Map();
+
+  /**
+   * Concurrent `getNotebook` calls for the same root share one
+   * initialization; without it each call created its own Notebook.
+   */
+  private notebookInit = new SingleFlight<Notebook>();
 
   /**
    * Notebook roots that were already reported to the user as refused
@@ -64,28 +77,44 @@ class NotebooksManager {
     // If not, create a new Notebook instance and push it to this.notebooks
     const notebookPathStr = workspaceFolderUri.toString();
     if (this.failedNotebookPaths.has(notebookPathStr)) {
+      const cause = this.failedNotebookPaths.get(notebookPathStr);
+      const reason = cause instanceof Error ? cause.message : String(cause);
       throw new Error(
-        `Notebook initialization previously failed for: ${notebookPathStr}`,
+        `Notebook initialization previously failed for: ${notebookPathStr}: ${reason}`,
       );
     }
 
+    return this.notebookInit.run(notebookPathStr, () =>
+      this.createNotebook(uri, workspaceFolderUri),
+    );
+  }
+
+  private async createNotebook(
+    uri: vscode.Uri,
+    workspaceFolderUri: vscode.Uri,
+  ): Promise<Notebook> {
+    const notebookPathStr = workspaceFolderUri.toString();
     let notebook: Notebook;
     try {
-      notebook = await Notebook.init({
-        notebookPath: notebookPathStr,
-        fs: wrapVSCodeFSAsApi(
-          workspaceFolderUri.scheme,
-          workspaceFolderUri.authority,
-        ),
-        config: {},
-      });
+      notebook = await timed('Notebook.init', () =>
+        Notebook.init({
+          notebookPath: notebookPathStr,
+          fs: wrapVSCodeFSAsApi(
+            workspaceFolderUri.scheme,
+            workspaceFolderUri.authority,
+          ),
+          config: {},
+        }),
+      );
     } catch (error) {
-      this.failedNotebookPaths.add(notebookPathStr);
+      this.failedNotebookPaths.set(notebookPathStr, error);
       throw error;
     }
     this.notebooks.push(notebook);
     this.applyPreviewScripts(notebook);
-    notebook.updateConfig(await this.loadNotebookConfig(uri));
+    notebook.updateConfig(
+      await timed('loadNotebookConfig', () => this.loadNotebookConfig(uri)),
+    );
     return notebook;
   }
 
