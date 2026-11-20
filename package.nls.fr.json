@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Extension pour améliorer l'aperçu Markdown",
+  "displayName": "CAS Markdown Studio",
+  "description": "Aperçu Markdown interactif pour VS Code : cochez des tâches, copiez du code. Un fork de Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:Ouvrir la vue graphique",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:Ouvrir l'aperçu sur le côté",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "Afficher automatiquement l'aperçu du Markdown en cours de modification.",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "Liste des schémas d'URI (par exemple `vscode-notebook-cell`) à exclure de la fonctionnalité `automaticallyShowPreviewOfMarkdownBeingEdited`. Les fichiers correspondant à ces schémas ne déclencheront pas l'aperçu automatique.",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "Liste de motifs de noms de fichiers (par exemple `*.note.md`) à exclure de la fonctionnalité `automaticallyShowPreviewOfMarkdownBeingEdited`. Les fichiers dont le nom correspond à l'un de ces motifs ne déclencheront pas l'aperçu automatique. Prend en charge `*` comme caractère générique. La correspondance porte sur le nom de base du fichier (et non le chemin complet) et ne tient pas compte de la casse.",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "Couleur d'arrière-plan de l'aperçu (toute couleur CSS, par ex. `black`, `#111` ou `rgb(20, 20, 20)`). Par défaut : `black`. Laissez vide pour utiliser l'arrière-plan du thème d'aperçu sélectionné.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "Utiliser le paramètre `markdown-preview-enhanced.previewTheme`.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "Suivre le jeu de couleurs du système. Si la valeur est true, le thème de l'aperçu Markdown bascule automatiquement entre clair et sombre lorsque votre système bascule entre clair et sombre. Par exemple, si le thème d'aperçu actuel est `github-light.css`, lorsque votre système est en sombre, le thème de l'aperçu bascule automatiquement vers `github-dark.css`. Si la valeur est false, le thème de l'aperçu ne change pas automatiquement.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "Utiliser le même thème que l'éditeur (clair ou sombre). Si la valeur est true, le thème de l'aperçu Markdown bascule automatiquement entre clair et sombre lorsque vous basculez entre le thème clair et sombre de VS Code. Par exemple, si le thème d'aperçu actuel est `github-light.css`, lorsque vous passez au thème sombre de VS Code, le thème de l'aperçu bascule automatiquement vers `github-dark.css`. Si la valeur est false, le thème de l'aperçu ne change pas automatiquement.",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "Activer cette option masquera les éléments d'interface inutiles dans l'aperçu, sauf lorsque votre souris se trouve dessus.",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "Lorsque cette option est activée, le menu contextuel de l'aperçu hérite des couleurs et de la police du thème de VS Code au lieu du style par défaut.",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "Affiche le menu contextuel personnalisé de l'extension dans l'aperçu. Désactivez-le pour revenir au menu contextuel natif du navigateur, avec ses entrées copier/coller habituelles.",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "Affiche un bouton « Copy » en haut à droite des blocs de code de l'aperçu. Survolez un bloc et cliquez pour copier le code dans le presse-papiers.",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "Cliquez sur une image dans l'aperçu pour la voir dans une superposition lightbox en plein écran. Appuyez sur Échap ou cliquez sur l'arrière-plan pour fermer.",
   "markdown-preview-enhanced.aiTranslationProvider.description": "Identifiant du fournisseur d'IA pour la fonctionnalité de traduction, p. ex. \"openai\", \"anthropic\", \"minimax-cn\", \"deepseek\". Voir la liste des fournisseurs de @earendil-works/pi-ai.",
   "markdown-preview-enhanced.aiTranslationModel.description": "Identifiant du modèle pour la traduction IA, p. ex. \"gpt-4o-mini\". Doit être un modèle valide pour le fournisseur choisi.",

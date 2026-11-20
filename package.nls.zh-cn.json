@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown 增强预览",
-  "description": " 这款插件意在让你拥有飘逸的 Markdown 写作体验",
+  "displayName": "CAS Markdown Studio",
+  "description": "适用于 VS Code 的交互式 Markdown 预览：勾选任务、复制代码。Markdown Preview Enhanced 的分支。",
   "customEditorPreviewDisplayName": "Markdown 增强预览",
   "markdown-preview-enhanced.openGraphView.title": "MPE:打开图形视图",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:打开侧边预览",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "自动显示正在编辑的 Markdown 的预览。",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "要从 `automaticallyShowPreviewOfMarkdownBeingEdited` 功能中排除的 URI scheme 列表（例如 `vscode-notebook-cell`）。匹配这些 scheme 的文件不会触发自动预览。",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "要从 `automaticallyShowPreviewOfMarkdownBeingEdited` 功能中排除的文件名模式列表（例如 `*.note.md`）。文件名匹配其中任意模式的文件不会触发自动预览。支持使用 `*` 作为通配符。匹配针对文件的基本名（而非完整路径）进行，且不区分大小写。",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "预览的背景颜色（任意 CSS 颜色，例如 `black`、`#111` 或 `rgb(20, 20, 20)`）。默认为 `black`。留空则使用所选预览主题的背景。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "使用 `markdown-preview-enhanced.previewTheme` 设置。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "跟随系统配色方案。若设为 true，则当系统在浅色与深色之间切换时，Markdown 预览主题会自动切换。例如，若当前预览主题设为 `github-light.css`，当系统为深色时，预览主题会自动切换为 `github-dark.css`。若设为 false，则预览主题不会自动更改。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "使用与编辑器相同的主题（浅色或深色）。若设为 true，则当你在 VS Code 浅色与深色主题之间切换时，Markdown 预览主题会自动切换。例如，若当前预览主题设为 `github-light.css`，当你切换到 VS Code 深色主题时，预览主题会自动切换为 `github-dark.css`。若设为 false，则预览主题不会自动更改。",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "启用此选项将隐藏预览中不必要的 UI 元素，除非鼠标悬停其上。",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "启用后，预览中的右键菜单将继承 VS Code 的主题颜色和字体，而非默认样式。",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "在预览中显示扩展的自定义右键菜单。关闭后将回退到浏览器原生右键菜单，保留惯用的复制/粘贴等条目。",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "在预览中的代码块右上角显示\"Copy\"按钮。将鼠标移到代码块上并点击即可将代码复制到剪贴板。",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "点击预览中的图片可在全屏灯箱叠层中查看。按 Escape 或点击背景关闭。",
   "markdown-preview-enhanced.aiTranslationProvider.description": "翻译功能的 AI 提供商 id，例如 \"openai\"、\"anthropic\"、\"minimax-cn\"、\"deepseek\"。参见 @earendil-works/pi-ai 提供商列表。",
   "markdown-preview-enhanced.aiTranslationModel.description": "AI 翻译使用的模型 id，例如 \"gpt-4o-mini\"。必须是所选提供商支持的有效模型。",

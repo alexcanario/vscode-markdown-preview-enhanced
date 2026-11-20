@@ -11,12 +11,14 @@ import {
 } from './crossnote-server';
 import { buildAndSaveWiki } from './crossnote-wiki';
 import { initExtensionCommon } from './extension-common';
+import { logTiming, timed } from './perf-log';
 import { PreviewProvider } from './preview-provider';
 import { globalConfigPath } from './utils';
 
 // this method is called when your extension openTextDocuments activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
+  const activateStartedAt = Date.now();
   try {
     if (!fs.existsSync(globalConfigPath)) {
       fs.mkdirSync(globalConfigPath, { recursive: true });
@@ -37,7 +39,8 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   // Init the extension-common module
-  await initExtensionCommon(context);
+  await timed('initExtensionCommon', () => initExtensionCommon(context));
+  logTiming('activate (total)', activateStartedAt);
 
   function customizeCSS() {
     const globalStyleLessFile = utility.addFileProtocol(

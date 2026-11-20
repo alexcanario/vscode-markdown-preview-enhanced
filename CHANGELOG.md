@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Rebrand
+
+- **Now published as CAS Markdown Studio** (`control-alt-sistemas.cas-markdown-studio`): new name, publisher, icon and README notice; `LICENSE.md` keeps the original NCSA notice and adds ours. Command and setting ids still start with `markdown-preview-enhanced.` to keep merges from upstream small, so this extension cannot be enabled together with the original Markdown Preview Enhanced.
+
+### Features
+
+- **Code blocks in the preview get a `Copy` button** — hovering a code block shows a button at its top-right that copies the code to the clipboard (with a short `Copied!` confirmation). The button is hidden when printing and can be turned off with the new `markdown-preview-enhanced.enableCodeCopyButton` setting ([#2177](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues/2177)).
+- **Configurable preview background** — the new `markdown-preview-enhanced.previewBackgroundColor` setting sets the preview's background color (any CSS color). It defaults to `black`; set it to an empty string to use the selected preview theme's own background.
+
+### Performance
+
+- **VS Code no longer stalls for a few seconds after startup** — the extension activated on `onStartupFinished` in every window, loading its ~17 MB bundle right after VS Code started (menus stopped responding for 4–5 s). It now activates only when a Markdown-family file, the preview editor or one of its commands is opened, so the one-time cost moves to the first Markdown file.
+- **The first preview opened as an editor shows up sooner** — a `Loading preview…` page is installed immediately and starts the webview and the download of crossnote's `preview.js` while the notebook initializes, instead of after it.
+- **Concurrent preview requests share one notebook initialization** — opening a preview could initialize the same notebook four times in parallel. A background warm-up also prepares the notebook when a Markdown text editor becomes active in a trusted workspace, and a failed initialization now reports its original error.
+- **Timing log** — the `CAS Markdown Studio: Performance` output channel records how long activation, notebook initialization, HTML generation, webview loading and Markdown parsing take.
+
+### Fixes
+
+- **Clicking a task list checkbox in the preview now edits the source even when it is not open in a visible editor** — the handler only looked at `visibleTextEditors`, so with the custom editor or a hidden/locked preview the click silently did nothing. It now opens the document by its URI and applies a `WorkspaceEdit` (undo with `Ctrl+Z`), toggling only the real task box (`- [ ]`, `* [x]`, `1. [ ]`, …) and leaving other `[ ]` text on the line alone.
+
 ## [0.8.40] - 2026-10-09
 
 ### Picked up from crossnote 0.9.42

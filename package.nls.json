@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown Preview Enhanced ported to vscode",
+  "displayName": "CAS Markdown Studio",
+  "description": "Interactive Markdown preview for VS Code: tick tasks, copy code, fast and open source. A fork of Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "Markdown Preview Enhanced: Open Graph View",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "Markdown Preview Enhanced: Open Preview to the Side",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "Automatically show preview of markdown being edited.",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "A list of URI schemes (e.g., `vscode-notebook-cell`) to exclude from the `automaticallyShowPreviewOfMarkdownBeingEdited` feature. Files matching these schemes won't trigger the automatic preview.",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "A list of file name patterns (e.g., `*.note.md`) to exclude from the `automaticallyShowPreviewOfMarkdownBeingEdited` feature. Files whose names match any of these patterns won't trigger the automatic preview. Supports `*` as a wildcard. Matching is performed against the file's basename (not full path) and is case-insensitive.",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "Background color of the preview (any CSS color, e.g. `black`, `#111` or `rgb(20, 20, 20)`). Defaults to `black`. Leave empty to use the background of the selected preview theme.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "Use the `markdown-preview-enhanced.previewTheme` setting.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "Follow system color scheme. If set to true, then the theme of markdown preview will automatically switch between light and dark when your system switch between light and dark. For example, if you set the current preview theme to `github-light.css`, then when your system is dark, the preview theme will be switched to `github-dark.css` automatically. If set to false, then the theme of markdown preview will not be changed automatically.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "Use the same theme as the editor (light or dark). If set to true, then the theme of markdown preview will automatically switch between light and dark when you switch between vscode light and dark theme. For example, if you set the current preview theme to `github-light.css`, then when you switch to vscode dark theme, the preview theme will be switched to `github-dark.css` automatically. If set to false, then the theme of markdown preview will not be changed automatically.",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "Enable this option will hide unnecessary UI elements in preview unless your mouse is over it.",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "When enabled, the context menu in preview inherits VS Code's theme colors and font instead of the default styling.",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "Show the extension's custom right-click menu in the preview. Disable it to fall back to the browser's native context menu, with its usual Copy/Paste entries.",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "Show a \"Copy\" button at the top-right of code blocks in the preview. Hover a block and click it to copy the code to the clipboard.",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "Click an image in the preview to view it in a full-screen lightbox overlay. Press Escape or click the backdrop to close.",
   "markdown-preview-enhanced.aiTranslationProvider.description": "AI provider id for the Translate feature, e.g. \"openai\", \"anthropic\", \"minimax-cn\", \"deepseek\". See @earendil-works/pi-ai provider list.",
   "markdown-preview-enhanced.aiTranslationModel.description": "Model id for AI translation, e.g. \"gpt-4o-mini\". Must be a valid model for the chosen provider.",

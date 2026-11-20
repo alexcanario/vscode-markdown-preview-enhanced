@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Extensie voor verbeterde Markdown-weergave",
+  "displayName": "CAS Markdown Studio",
+  "description": "Interactief Markdown-voorbeeld voor VS Code: vink taken af en kopieer code. Een fork van Markdown Preview Enhanced.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:Grafiekweergave openen",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:Voorbeeld naast openen",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "Toon automatisch een voorbeeld van de Markdown die wordt bewerkt.",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "Een lijst met URI-schema's (bijv. `vscode-notebook-cell`) die moeten worden uitgesloten van de functie `automaticallyShowPreviewOfMarkdownBeingEdited`. Bestanden die overeenkomen met deze schema's activeren het automatische voorbeeld niet.",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "Een lijst met bestandsnaampatronen (bijv. `*.note.md`) die moeten worden uitgesloten van de functie `automaticallyShowPreviewOfMarkdownBeingEdited`. Bestanden waarvan de naam overeenkomt met een van deze patronen activeren het automatische voorbeeld niet. Ondersteunt `*` als jokerteken. De vergelijking wordt uitgevoerd op de basisnaam van het bestand (niet het volledige pad) en is niet hoofdlettergevoelig.",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "Achtergrondkleur van het voorbeeld (elke CSS-kleur, bijv. `black`, `#111` of `rgb(20, 20, 20)`). Standaard `black`. Laat leeg om de achtergrond van het gekozen voorbeeldthema te gebruiken.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "De instelling `markdown-preview-enhanced.previewTheme` gebruiken.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "Het kleurenschema van het systeem volgen. Indien ingesteld op true, schakelt het thema van het Markdown-voorbeeld automatisch tussen licht en donker wanneer uw systeem tussen licht en donker schakelt. Als het huidige voorbeeldthema bijvoorbeeld is ingesteld op `github-light.css`, wordt het voorbeeldthema automatisch overgeschakeld naar `github-dark.css` wanneer uw systeem donker is. Indien ingesteld op false, wordt het thema van het voorbeeld niet automatisch gewijzigd.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "Hetzelfde thema als de editor gebruiken (licht of donker). Indien ingesteld op true, schakelt het thema van het Markdown-voorbeeld automatisch tussen licht en donker wanneer u schakelt tussen het lichte en donkere thema van VS Code. Als het huidige voorbeeldthema bijvoorbeeld is ingesteld op `github-light.css`, wordt het voorbeeldthema automatisch overgeschakeld naar `github-dark.css` wanneer u overschakelt naar het donkere thema van VS Code. Indien ingesteld op false, wordt het thema van het voorbeeld niet automatisch gewijzigd.",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "Door deze optie in te schakelen worden onnodige UI-elementen in het voorbeeld verborgen, tenzij uw muis erboven zweeft.",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "Indien ingeschakeld neemt het contextmenu in het voorbeeld de themakleuren en het lettertype van VS Code over in plaats van de standaardstijl.",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "Toont het aangepaste rechtermuisknopmenu van de extensie in de preview. Schakel het uit om terug te vallen op het native browsermenu, met de gebruikelijke kopiëren/plakken-opties.",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "Toont een \"Copy\"-knop rechtsboven in codeblokken in het voorbeeld. Beweeg over een blok en klik om de code naar het klembord te kopiëren.",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "Klik op een afbeelding in het voorbeeld om deze te bekijken in een schermvullende lightbox-overlay. Druk op Escape of klik op de achtergrond om te sluiten.",
   "markdown-preview-enhanced.aiTranslationProvider.description": "AI-provider-id voor de vertaalfunctie, bv. \"openai\", \"anthropic\", \"minimax-cn\", \"deepseek\". Zie de providerlijst van @earendil-works/pi-ai.",
   "markdown-preview-enhanced.aiTranslationModel.description": "Model-id voor AI-vertaling, bv. \"gpt-4o-mini\". Moet een geldig model zijn voor de gekozen provider.",

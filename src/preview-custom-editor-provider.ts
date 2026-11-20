@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { PreviewProvider } from './preview-provider';
+import { logTiming } from './perf-log';
+import { PreviewProvider, showPreviewLoadingPage } from './preview-provider';
 
 export class PreviewCustomEditorProvider
   implements vscode.CustomTextEditorProvider
@@ -12,6 +13,10 @@ export class PreviewCustomEditorProvider
     _token: vscode.CancellationToken,
   ): Promise<void> {
     try {
+      // Start the webview (and its preview.js download) now, in parallel
+      // with the notebook init below, instead of after it.
+      showPreviewLoadingPage(webviewPanel, this.context);
+      logTiming('loading page installed', Date.now());
       const provider = await PreviewProvider.getPreviewContentProvider(
         document.uri,
         this.context,

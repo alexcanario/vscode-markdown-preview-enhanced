@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown Preview Enhanced-in VS Code-a portlanmış versiyası",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code üçün interaktiv Markdown önbaxışı: tapşırıqları işarələyin, kodu kopyalayın. Markdown Preview Enhanced-in fork-u.",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "Markdown Preview Enhanced: Qrafik görünüşünü aç",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "Markdown Preview Enhanced: Önbaxışı yanda aç",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "Redaktə olunan markdown-un önbaxışını avtomatik göstər.",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` funksiyasından çıxarılacaq URI sxemlərinin siyahısı (məsələn, `vscode-notebook-cell`). Bu sxemlərə uyğun fayllar avtomatik önbaxışı işə salmayacaq.",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` funksiyasından çıxarılacaq fayl adı şablonlarının siyahısı (məsələn, `*.note.md`). Adı bu şablonlardan hər hansı birinə uyğun gələn fayllar avtomatik önbaxışı işə salmayacaq. `*` joker simvolu kimi dəstəklənir. Uyğunlaşdırma faylın əsas adına görə aparılır (tam yol üzrə deyil) və böyük/kiçik hərfə həssas deyil.",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "Önbaxışın fon rəngi (istənilən CSS rəngi, məs. `black`, `#111` və ya `rgb(20, 20, 20)`). Defolt olaraq `black`. Seçilmiş önbaxış temasının fonundan istifadə etmək üçün boş buraxın.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "`markdown-preview-enhanced.previewTheme` parametrini işlət.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "Sistemin rəng sxemini izlə. true olaraq təyin edilibsə, sisteminiz açıq və tünd rejim arasında keçdikdə markdown önbaxışının teması da avtomatik dəyişir. Məsələn, cari önbaxış temasını `github-light.css` təyin etmisinizsə, sisteminiz tünd rejimdə olduqda önbaxış teması avtomatik olaraq `github-dark.css`-ə keçir. false olaraq təyin edilibsə, markdown önbaxışının teması avtomatik dəyişmir.",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "Redaktorla eyni temanı işlət (açıq və ya tünd). true olaraq təyin edilibsə, VS Code-un açıq və tünd teması arasında keçdikdə markdown önbaxışının teması da avtomatik dəyişir. Məsələn, cari önbaxış temasını `github-light.css` təyin etmisinizsə, VS Code-da tünd temaya keçdikdə önbaxış teması avtomatik olaraq `github-dark.css`-ə keçir. false olaraq təyin edilibsə, markdown önbaxışının teması avtomatik dəyişmir.",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "Bu seçimi aktivləşdirmək, siçan üzərində olmadıqda önbaxışdakı lazımsız interfeys elementlərini gizlədəcək.",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "Aktivləşdirildikdə, önbaxışdakı kontekst menyusu standart üslub əvəzinə VS Code-un tema rənglərini və şriftini miras alır.",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "Önbaxışda genişlənmənin fərdi sağ klik menyusunu göstər. Söndürsəniz, adi Kopyala/Yapışdır bəndləri olan brauzerin daxili kontekst menyusuna qayıdılır.",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "Önbaxışda kod bloklarının yuxarı sağ küncündə \"Copy\" düyməsini göstərin. Kodu mübadilə buferinə kopyalamaq üçün blokun üzərinə gətirib klikləyin.",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "Önbaxışda bir şəkilə klikləyərək onu tam ekran lightbox qatında görüntüləyin. Bağlamaq üçün Escape düyməsinə basın və ya arxa fona klikləyin.",
   "markdown-preview-enhanced.aiTranslationProvider.description": "Tərcümə funksiyası üçün AI provayder ID-si, məsələn \"openai\", \"anthropic\", \"minimax-cn\", \"deepseek\". @earendil-works/pi-ai provayder siyahısına baxın.",
   "markdown-preview-enhanced.aiTranslationModel.description": "AI tərcüməsi üçün model ID-si, məsələn \"gpt-4o-mini\". Seçilmiş provayder üçün etibarlı model olmalıdır.",

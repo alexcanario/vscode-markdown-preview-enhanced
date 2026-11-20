@@ -1,5 +1,5 @@
 {
-  "name": "markdown-preview-enhanced",
+  "name": "cas-markdown-studio",
   "displayName": "%displayName%",
   "version": "0.8.40",
   "description": "%description%",
@@ -10,17 +10,19 @@
     "markdown"
   ],
   "bugs": {
-    "url": "https://github.com/shd101wyy/vscode-markdown-preview-enhanced/issues"
+    "url": "https://github.com/alexcanario/vscode-markdown-preview-enhanced/issues"
   },
-  "repository": "https://github.com/shd101wyy/vscode-markdown-preview-enhanced",
+  "repository": "https://github.com/alexcanario/vscode-markdown-preview-enhanced",
   "license": "NCSA",
+  "author": "Alex Canário",
   "contributors": [
+    "Alex Canário",
     "shd101wyy",
     "kachkaev",
     "gabyx",
     "mavaddat"
   ],
-  "publisher": "shd101wyy",
+  "publisher": "control-alt-sistemas",
   "packageManager": "pnpm@10.28.0",
   "main": "./out/native/extension.js",
   "browser": "./out/web/extension.js",
@@ -38,7 +40,7 @@
     "run-in-browser:watch": "node build.js --web-dev && concurrently \"vscode-test-web --browser none --extensionDevelopmentPath=. ${SERVE_DIR:-.}\" \"npx http-server ./crossnote -p 6789 --cors\" \"node build.js --watch\"",
     "run-in-vscode-dev": "npx serve --cors -l 5000 --ssl-cert $HOME/certs/localhost.pem --ssl-key $HOME/certs/localhost-key.pem",
     "test": "pnpm test:unit",
-    "test:unit": "mocha --ui tdd --reporter spec test/find-fragment-target-line.test.js test/block-id-helpers.test.js test/rank-by-closeness.test.js test/current-preview-source.test.js test/preview-source-integration.test.js test/l10n-bundles.test.js test/native-runtime-compat.test.js test/crossnote-serve-output.test.js test/filesystem-root-warning.test.js test/custom-editor-options.test.js test/editor-associations.test.js test/custom-editor-single-preview.test.js test/trusted-script-roots.test.js",
+    "test:unit": "mocha --ui tdd --reporter spec test/find-fragment-target-line.test.js test/block-id-helpers.test.js test/rank-by-closeness.test.js test/current-preview-source.test.js test/preview-source-integration.test.js test/l10n-bundles.test.js test/native-runtime-compat.test.js test/crossnote-serve-output.test.js test/filesystem-root-warning.test.js test/custom-editor-options.test.js test/editor-associations.test.js test/custom-editor-single-preview.test.js test/trusted-script-roots.test.js test/task-list-toggle.test.js test/single-flight.test.js",
     "vscode:prepublish": "pnpm install --frozen-lockfile && pnpm build",
     "watch": "gulp copy-files && gulp clean-out && node build.js --watch"
   },
@@ -292,6 +294,11 @@
           "items": {
             "type": "string"
           }
+        },
+        "markdown-preview-enhanced.previewBackgroundColor": {
+          "description": "%markdown-preview-enhanced.previewBackgroundColor.description%",
+          "type": "string",
+          "default": "black"
         },
         "markdown-preview-enhanced.previewColorScheme": {
           "type": "string",
@@ -861,6 +868,11 @@
           "default": true,
           "type": "boolean"
         },
+        "markdown-preview-enhanced.enableCodeCopyButton": {
+          "description": "%markdown-preview-enhanced.enableCodeCopyButton.description%",
+          "default": true,
+          "type": "boolean"
+        },
         "markdown-preview-enhanced.enableImageLightbox": {
           "description": "%markdown-preview-enhanced.enableImageLightbox.description%",
           "default": true,
@@ -981,7 +993,6 @@
     }
   },
   "activationEvents": [
-    "onStartupFinished",
     "onLanguage:markdown",
     "onLanguage:quarto",
     "onLanguage:prompt",
@@ -1041,5 +1052,5 @@
       "less": "4.2.2"
     }
   },
-  "icon": "media/mpe.png"
+  "icon": "media/icon.png"
 }

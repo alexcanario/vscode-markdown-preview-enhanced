@@ -29,6 +29,7 @@ export enum PreviewColorScheme {
 type VSCodeMPEConfigKey =
   | 'automaticallyShowPreviewOfMarkdownBeingEdited'
   | 'configPath'
+  | 'enableCodeCopyButton'
   | 'enableImageLightbox'
   | 'enablePreviewContextMenu'
   | 'enablePreviewScripts'
@@ -37,6 +38,7 @@ type VSCodeMPEConfigKey =
   | 'hideDefaultVSCodeMarkdownPreviewButtons'
   | 'liveUpdate'
   | 'liveUpdateDebounceMs'
+  | 'previewBackgroundColor'
   | 'previewColorScheme'
   | 'previewMode'
   | 'qiniuAccessKey'

@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import { initExtensionCommon } from './extension-common';
+import { timed } from './perf-log';
 
 export async function activate(context: vscode.ExtensionContext) {
   try {
-    await initExtensionCommon(context);
+    await timed('activate (total)', () => initExtensionCommon(context));
   } catch (error) {
     console.error('[Markdown Preview Enhanced] Failed to activate:', error);
     vscode.window.showErrorMessage(

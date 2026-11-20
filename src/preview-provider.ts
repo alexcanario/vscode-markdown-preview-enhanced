@@ -16,6 +16,7 @@ import {
 } from './current-preview-source';
 import { hashBlock, splitMarkdownBlocks } from './markdown-blocks';
 import NotebooksManager from './notebooks-manager';
+import { logTiming, timed } from './perf-log';
 import {
   getCrossnoteVersion,
   getPreviewMode,
@@ -172,6 +173,60 @@ function buildPreviewCSP(panel: vscode.WebviewPanel): string {
   ].join('; ');
 }
 
+/**
+ * Install a lightweight "loading" page in a preview panel before the notebook
+ * is ready. The first preview used to run its two slow steps one after the
+ * other — notebook init in the extension host, then the webview cold start
+ * loading crossnote's ~4 MB preview.js — so the user waited for their sum.
+ * This page starts the webview right away and asks it to fetch preview.js and
+ * the preview styles (preload: fetched, not executed) at the exact URLs the
+ * real page will use, so both steps overlap. initPreview replaces it with the
+ * real page and its full webview options.
+ */
+export function showPreviewLoadingPage(
+  panel: vscode.WebviewPanel,
+  context: vscode.ExtensionContext,
+): void {
+  const buildDir = utility.getCrossnoteBuildDirectory();
+  panel.webview.options = {
+    enableScripts: true,
+    localResourceRoots: [
+      vscode.Uri.file(context.extensionPath),
+      ...(buildDir.startsWith('http') ? [] : [vscode.Uri.file(buildDir)]),
+    ],
+  };
+  const resource = (relativePath: string) =>
+    utility.addFileProtocol(path.resolve(buildDir, relativePath), panel);
+  const cspSource = panel.webview.cspSource;
+  const csp = [
+    `default-src 'none'`,
+    `script-src ${cspSource} https:`,
+    `style-src ${cspSource} https: 'unsafe-inline'`,
+    `font-src ${cspSource} https: data:`,
+  ].join('; ');
+  panel.webview.html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="${csp}">
+  <link rel="preload" as="script" href="${resource('./webview/preview.js')}">
+  <link rel="preload" as="style" href="${resource('./webview/preview.css')}">
+  <link rel="preload" as="style" href="${resource('./styles/preview.css')}">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background-color: var(--vscode-editor-background);
+      color: var(--vscode-descriptionForeground);
+      font-family: var(--vscode-font-family);
+    }
+    body { display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>Loading preview…</body>
+</html>`;
+}
+
 export function getAllPreviewProviders(): PreviewProvider[] {
   return Array.from(WORKSPACE_PREVIEW_PROVIDER_MAP.values());
 }
@@ -204,6 +259,13 @@ export class PreviewProvider {
   private initRequestSeq = 0;
   private latestInitRequestByPreview: WeakMap<vscode.WebviewPanel, number> =
     new WeakMap();
+
+  /**
+   * Performance log: when initPreview installed the HTML, per source uri.
+   * The next updateMarkdown for that uri comes from the webview's
+   * `webviewFinishLoading`, so the gap is the webview load time.
+   */
+  private htmlInstalledAt: Map<string, number> = new Map();
 
   /**
    * Sequence counter for updateMarkdown render requests (per sourceUri).
@@ -389,7 +451,9 @@ export class PreviewProvider {
         return provider;
       } else {
         const provider = new PreviewProvider();
-        await provider.init(context, workspaceUri);
+        await timed('PreviewProvider.init', () =>
+          provider.init(context, workspaceUri),
+        );
         WORKSPACE_PREVIEW_PROVIDER_MAP.set(mutexKey, provider);
         release();
         return provider;
@@ -573,6 +637,7 @@ export class PreviewProvider {
     /** The panel was provided by a VS Code custom editor (pinned per doc). */
     isCustomEditor?: boolean;
   }): Promise<void> {
+    const initPreviewStartedAt = Date.now();
     const previewMode = getPreviewMode();
     let previewPanel: vscode.WebviewPanel;
     const previews = this.getPreviews(sourceUri);
@@ -786,58 +851,62 @@ export class PreviewProvider {
 
       // Build lightbox head injection when enabled
       let head = '';
+      const mediaHead = (name: string) => {
+        const cssUri = previewPanel.webview.asWebviewUri(
+          vscode.Uri.joinPath(
+            this.context.extensionUri,
+            'media',
+            `${name}.css`,
+          ),
+        );
+        const jsUri = previewPanel.webview.asWebviewUri(
+          vscode.Uri.joinPath(this.context.extensionUri, 'media', `${name}.js`),
+        );
+        return `<link rel="stylesheet" href="${cssUri}"><script defer src="${jsUri}"></script>`;
+      };
       if (getMPEConfig<boolean>('enableImageLightbox') ?? true) {
-        const lightboxCssUri = previewPanel.webview.asWebviewUri(
-          vscode.Uri.joinPath(
-            this.context.extensionUri,
-            'media',
-            'lightbox.css',
-          ),
-        );
-        const lightboxJsUri = previewPanel.webview.asWebviewUri(
-          vscode.Uri.joinPath(
-            this.context.extensionUri,
-            'media',
-            'lightbox.js',
-          ),
-        );
-        head = `<link rel="stylesheet" href="${lightboxCssUri}"><script defer src="${lightboxJsUri}"></script>`;
+        head += mediaHead('lightbox');
+      }
+      if (getMPEConfig<boolean>('enableCodeCopyButton') ?? true) {
+        head += mediaHead('code-copy');
       }
 
-      const html = await engine.generateHTMLTemplateForPreview({
-        inputString,
-        config: {
-          sourceUri: sourceUri.toString(),
-          cursorLine: initialLine,
-          isVSCode: true,
-          scrollSync: getMPEConfig<boolean>('scrollSync'),
-          imageUploader: getMPEConfig<ImageUploader>('imageUploader'),
-          // v2 translation: tell the webview whether it's currently showing
-          // the translated markdown, so the context-menu item can toggle
-          // between "Translate" and "Show Original".
-          isShowingTranslation: this.translatedMarkdownOverrides.has(
-            sourceUri.toString(),
-          ),
-          // Localize the webview UI (context menu, footer, etc.)
-          // following the VS Code display language; unknown locales
-          // fall back to English inside crossnote. Passed via spread
-          // because `locale` requires crossnote >= 0.9.32 — against
-          // 0.9.31 the extra property is ignored at runtime, but a
-          // plain property would fail object-literal excess-property
-          // checks against its older typings.
-          ...{ locale: vscode.env.language },
-        },
-        contentSecurityPolicy: buildPreviewCSP(previewPanel),
-        vscodePreviewPanel: previewPanel,
-        isVSCodeWebExtension: isVSCodeWebExtension(),
-        // In the web extension, this.filePath is just the path component of a
-        // virtual URI (e.g. '/LICENSE.md'), so the default <base> tag would be
-        // malformed. The React webview already appends the correct <base> tag at
-        // runtime using the full sourceUri, so we can safely omit it here.
-        // For the native extension the default base tag is harmless, but we keep
-        // consistent behaviour and let React own it in both cases.
-        head,
-      });
+      const html = await timed('generateHTMLTemplateForPreview', () =>
+        engine.generateHTMLTemplateForPreview({
+          inputString,
+          config: {
+            sourceUri: sourceUri.toString(),
+            cursorLine: initialLine,
+            isVSCode: true,
+            scrollSync: getMPEConfig<boolean>('scrollSync'),
+            imageUploader: getMPEConfig<ImageUploader>('imageUploader'),
+            // v2 translation: tell the webview whether it's currently showing
+            // the translated markdown, so the context-menu item can toggle
+            // between "Translate" and "Show Original".
+            isShowingTranslation: this.translatedMarkdownOverrides.has(
+              sourceUri.toString(),
+            ),
+            // Localize the webview UI (context menu, footer, etc.)
+            // following the VS Code display language; unknown locales
+            // fall back to English inside crossnote. Passed via spread
+            // because `locale` requires crossnote >= 0.9.32 — against
+            // 0.9.31 the extra property is ignored at runtime, but a
+            // plain property would fail object-literal excess-property
+            // checks against its older typings.
+            ...{ locale: vscode.env.language },
+          },
+          contentSecurityPolicy: buildPreviewCSP(previewPanel),
+          vscodePreviewPanel: previewPanel,
+          isVSCodeWebExtension: isVSCodeWebExtension(),
+          // In the web extension, this.filePath is just the path component of a
+          // virtual URI (e.g. '/LICENSE.md'), so the default <base> tag would be
+          // malformed. The React webview already appends the correct <base> tag at
+          // runtime using the full sourceUri, so we can safely omit it here.
+          // For the native extension the default base tag is harmless, but we keep
+          // consistent behaviour and let React own it in both cases.
+          head,
+        }),
+      );
 
       // If a newer initPreview call has taken over this panel, or the panel was
       // disposed, or (in single-preview mode) this URI is no longer the target,
@@ -850,6 +919,11 @@ export class PreviewProvider {
         return;
       }
       previewPanel.webview.html = html;
+      logTiming(
+        `initPreview ${path.basename(sourceUri.fsPath)} (until HTML installed)`,
+        initPreviewStartedAt,
+      );
+      this.htmlInstalledAt.set(sourceUri.toString(), Date.now());
       // Publish the source only after this render won the request race and its
       // HTML was installed. Until then, the panel still represents its prior
       // source (or has no reliably rendered source yet).
@@ -990,6 +1064,19 @@ export class PreviewProvider {
       return this.refreshPreview(sourceUri);
     }
 
+    // Performance log: the first update after initPreview installed the
+    // HTML is requested by the webview once it has loaded.
+    const sourceKey = sourceUri.toString();
+    const htmlInstalledAt = this.htmlInstalledAt.get(sourceKey);
+    const isFirstRender = htmlInstalledAt !== undefined;
+    if (isFirstRender) {
+      this.htmlInstalledAt.delete(sourceKey);
+      logTiming(
+        `webview load ${path.basename(sourceUri.fsPath)} (HTML installed → first update request)`,
+        htmlInstalledAt,
+      );
+    }
+
     // not presentation mode — run async but guard against stale renders
     (async () => {
       let document: vscode.TextDocument;
@@ -1049,6 +1136,7 @@ export class PreviewProvider {
       for (let i = 0; i < currentPreviews.length; i++) {
         try {
           const preview = currentPreviews[i];
+          const parseStartedAt = Date.now();
           const {
             html,
             tocHTML,
@@ -1061,6 +1149,14 @@ export class PreviewProvider {
             triggeredBySave,
             vscodePreviewPanel: preview,
           });
+          // Log the first render, and any later one slow enough to notice;
+          // logging every keystroke would flood the channel.
+          if (isFirstRender || Date.now() - parseStartedAt >= 200) {
+            logTiming(
+              `parseMD ${path.basename(sourceUri.fsPath)} (${text.length} chars)`,
+              parseStartedAt,
+            );
+          }
 
           // Discard if a newer render has taken over for this sourceUri or the
           // single-preview target changed while parseMD was running
@@ -1085,6 +1181,10 @@ export class PreviewProvider {
             yamlConfig['isPresentationMode']
           ) {
             this.jsAndCssFilesMaps[sourceUri.fsPath] = normalizedResources;
+            logTiming(
+              `preview restart ${path.basename(sourceUri.fsPath)} (scripts/styles changed, renders again)`,
+              Date.now(),
+            );
             // restart iframe
             this.refreshPreview(sourceUri);
           } else {

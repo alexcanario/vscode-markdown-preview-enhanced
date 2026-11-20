@@ -1,6 +1,6 @@
 {
-  "displayName": "Markdown Preview Enhanced",
-  "description": "Markdown プレビューを強化する拡張機能",
+  "displayName": "CAS Markdown Studio",
+  "description": "VS Code 向けのインタラクティブな Markdown プレビュー：タスクのチェックとコードのコピー。Markdown Preview Enhanced のフォークです。",
   "customEditorPreviewDisplayName": "Markdown Preview Enhanced",
   "markdown-preview-enhanced.openGraphView.title": "MPE:グラフビューを開く",
   "markdown-preview-enhanced.openPreviewToTheSide.title": "MPE:プレビューを横に開く",
@@ -45,6 +45,7 @@
   "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited.description": "編集中の Markdown のプレビューを自動的に表示します。",
   "markdown-preview-enhanced.disableAutoPreviewForUriSchemes.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` 機能から除外する URI スキームのリスト（例: `vscode-notebook-cell`）。これらのスキームに一致するファイルは自動プレビューをトリガーしません。",
   "markdown-preview-enhanced.disableAutoPreviewForFilePatterns.markdownDescription": "`automaticallyShowPreviewOfMarkdownBeingEdited` 機能から除外するファイル名パターンのリスト（例: `*.note.md`）。いずれかのパターンに一致する名前のファイルは自動プレビューをトリガーしません。ワイルドカードとして `*` を使用できます。照合はファイルのベース名（フルパスではなく）に対して行われ、大文字と小文字を区別しません。",
+  "markdown-preview-enhanced.previewBackgroundColor.description": "プレビューの背景色（任意の CSS カラー。例: `black`、`#111`、`rgb(20, 20, 20)`）。既定値は `black` です。空にすると、選択したプレビューテーマの背景を使用します。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.0": "`markdown-preview-enhanced.previewTheme` 設定を使用します。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.1": "システムのカラースキームに従います。true に設定すると、システムがライトとダークを切り替えたときに Markdown プレビューのテーマも自動的に切り替わります。たとえば、現在のプレビューテーマを `github-light.css` に設定している場合、システムがダークになるとプレビューテーマは自動的に `github-dark.css` に切り替わります。false に設定すると、プレビューのテーマは自動的に変更されません。",
   "markdown-preview-enhanced.previewColorScheme.markdownEnumDescriptions.2": "エディターと同じテーマ（ライトまたはダーク）を使用します。true に設定すると、VS Code のライトとダークのテーマを切り替えたときに Markdown プレビューのテーマも自動的に切り替わります。たとえば、現在のプレビューテーマを `github-light.css` に設定している場合、VS Code のダークテーマに切り替えるとプレビューテーマは自動的に `github-dark.css` に切り替わります。false に設定すると、プレビューのテーマは自動的に変更されません。",
@@ -135,6 +136,8 @@
   "markdown-preview-enhanced.enablePreviewZenMode.description": "このオプションを有効にすると、マウスを乗せていない限り、プレビュー内の不要な UI 要素が非表示になります。",
   "markdown-preview-enhanced.useVSCodeThemeForContextMenu.description": "有効にすると、プレビュー内のコンテキストメニューが既定のスタイルではなく VS Code のテーマカラーとフォントを継承します。",
   "markdown-preview-enhanced.enablePreviewContextMenu.description": "プレビューに拡張機能のカスタム右クリックメニューを表示します。無効にすると、通常のコピー/貼り付けなどの項目を備えたブラウザー標準の右クリックメニューに戻ります。",
+  "markdown-preview-enhanced.enableCodeCopyButton.description": "プレビュー内のコードブロックの右上に「Copy」ボタンを表示します。ブロックにカーソルを合わせてクリックすると、コードがクリップボードにコピーされます。",
+
   "markdown-preview-enhanced.enableImageLightbox.description": "プレビュー内の画像をクリックすると、全画面のライトボックスオーバーレイで表示できます。Escape を押すか背景をクリックすると閉じます。",
   "markdown-preview-enhanced.aiTranslationProvider.description": "翻訳機能で使用するAIプロバイダーのID。例: \"openai\"、\"anthropic\"、\"minimax-cn\"、\"deepseek\"。@earendil-works/pi-ai のプロバイダー一覧を参照。",
   "markdown-preview-enhanced.aiTranslationModel.description": "AI翻訳で使用するモデルID。例: \"gpt-4o-mini\"。選択したプロバイダーで有効なモデルである必要があります。",

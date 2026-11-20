@@ -26,6 +26,7 @@ import {
   getPreviewUri,
 } from './preview-provider';
 import { GraphViewProvider } from './graph-view-provider';
+import { toggleTaskLine } from './task-list-toggle';
 import {
   createMissingMarkdownNote,
   getBottomVisibleLine,
@@ -35,6 +36,7 @@ import {
   getWorkspaceFolderUri,
   isMarkdownFile,
 } from './utils';
+import { timed } from './perf-log';
 import * as path from 'path';
 
 let editorScrollDelay = Date.now();
@@ -78,6 +80,39 @@ export async function initExtensionCommon(context: vscode.ExtensionContext) {
   async function getPreviewContentProvider(uri: vscode.Uri) {
     return await PreviewProvider.getPreviewContentProvider(uri, context);
   }
+
+  /**
+   * Warm-up: build the preview provider (notebook init + config, ~2 s cold)
+   * in the background as soon as a markdown file becomes active, so the
+   * first preview does not pay for it. Only for trusted workspaces, because
+   * the notebook init runs the workspace's `.crossnote` scripts, and once
+   * per notebook root. Windows that never open markdown pay nothing.
+   */
+  const warmedNotebookRoots = new Set<string>();
+  function warmUpPreviewProvider(editor: vscode.TextEditor | undefined) {
+    if (!editor || !vscode.workspace.isTrusted) {
+      return;
+    }
+    const document = editor.document;
+    if (!isMarkdownFile(document) || document.uri.scheme === 'untitled') {
+      return;
+    }
+    const rootKey = getWorkspaceFolderUri(document.uri).toString();
+    if (warmedNotebookRoots.has(rootKey)) {
+      return;
+    }
+    warmedNotebookRoots.add(rootKey);
+    timed('warm-up preview provider', () =>
+      getPreviewContentProvider(document.uri),
+    ).catch((error) => {
+      // The preview reports the original error when it is opened.
+      console.warn('[CAS Markdown Studio] Preview warm-up failed:', error);
+    });
+  }
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor(warmUpPreviewProvider),
+  );
+  warmUpPreviewProvider(vscode.window.activeTextEditor);
 
   async function openPreviewToTheSide(uri?: vscode.Uri) {
     const editor = vscode.window.activeTextEditor;
@@ -672,30 +707,23 @@ export async function initExtensionCommon(context: vscode.ExtensionContext) {
     });
   }
 
-  function clickTaskListCheckbox(uri: string, dataLine: number) {
-    const sourceUri = vscode.Uri.parse(uri);
-    const visibleTextEditors = vscode.window.visibleTextEditors;
-    for (let i = 0; i < visibleTextEditors.length; i++) {
-      const editor = visibleTextEditors[i];
-      if (editor.document.uri.fsPath === sourceUri.fsPath) {
-        editor.edit((edit) => {
-          let line = editor.document.lineAt(dataLine).text;
-          if (line.match(/\[ \]/)) {
-            line = line.replace('[ ]', '[x]');
-          } else {
-            line = line.replace(/\[[xX]\]/, '[ ]');
-          }
-          edit.replace(
-            new vscode.Range(
-              new vscode.Position(dataLine, 0),
-              new vscode.Position(dataLine, line.length),
-            ),
-            line,
-          );
-        });
-        break;
-      }
+  async function clickTaskListCheckbox(uri: string, dataLine: number) {
+    // Open the document by uri instead of looking for a visible editor, so
+    // the toggle also works for custom editors and locked/hidden previews.
+    const document = await vscode.workspace.openTextDocument(
+      vscode.Uri.parse(uri),
+    );
+    if (dataLine < 0 || dataLine >= document.lineCount) {
+      return;
     }
+    const line = document.lineAt(dataLine);
+    const toggled = toggleTaskLine(line.text);
+    if (toggled === null) {
+      return;
+    }
+    const edit = new vscode.WorkspaceEdit();
+    edit.replace(document.uri, line.range, toggled);
+    await vscode.workspace.applyEdit(edit);
   }
 
   function setPreviewTheme(_uri: string, theme: string) {
